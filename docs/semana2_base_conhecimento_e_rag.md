@@ -33,17 +33,17 @@ escolhido e devolve uma resposta em que **cada frase indica de qual artigo veio*
 
 | Entregável | Situação | Onde está |
 | :--- | :--- | :--- |
-| Base de conhecimento curada | ✅ 25 normas, 5.284 artigos, auditadas | Seção 3 · `notebooks/01_legislacao/01_auditoria_clt.ipynb`, `02`, `03` |
-| Mínimo de 20 documentos-fonte | ✅ 25 normas | Seção 3 (tabela completa) |
-| Descrição da estratégia de chunking | ✅ 5 estratégias testadas, escolhida D → A | Seção 5 · `notebooks/04_experimentos_chunking.ipynb` |
-| Descrição da estratégia de embeddings | ✅ BGE-M3 denso, 1.024 dimensões | Seção 6 · `notebooks/06_experimentos_recuperacao.ipynb` |
-| Implementação de um banco vetorial | ✅ PostgreSQL 16 + pgvector 0.8.7 | Seção 7 · `src/storage/pgvector_store.py` |
-| Consulta submetida ao sistema | ✅ | Seção 10 · `notebooks/07_integracao_rag_legislacao.ipynb` |
-| Recuperação dos chunks mais relevantes | ✅ medida em 11 perguntas de desenvolvimento | Seção 8 · notebook 06 |
-| Resposta fundamentada no conteúdo recuperado | ✅ implementada | Seção 9 · notebook 07 |
-| Evidência das fontes utilizadas | ✅ tabela de fontes por resposta | Seções 9 e 10 · notebook 07 |
-| Diagrama de arquitetura | ✅ | Seção 2 |
-| Pipeline de ingestão de dados | ✅ | Seção 4 |
+| Base de conhecimento curada | Feito: 25 normas, 5.284 artigos, auditadas | Seção 3 · `notebooks/01_legislacao/01_auditoria_clt.ipynb`, `02`, `03` |
+| Mínimo de 20 documentos-fonte | Feito: 25 normas | Seção 3 (tabela completa) |
+| Descrição da estratégia de chunking | Feito: 5 estratégias testadas, escolhida D → A | Seção 5 · `notebooks/04_experimentos_chunking.ipynb` |
+| Descrição da estratégia de embeddings | Feito: BGE-M3 denso, 1.024 dimensões | Seção 6 · `notebooks/06_experimentos_recuperacao.ipynb` |
+| Implementação de um banco vetorial | Feito: PostgreSQL 16 + pgvector 0.8.7 | Seção 7 · `src/storage/pgvector_store.py` |
+| Consulta submetida ao sistema | Feito | Seção 10 · `notebooks/07_integracao_rag_legislacao.ipynb` |
+| Recuperação dos chunks mais relevantes | Feito: medida em 11 perguntas de desenvolvimento | Seção 8 · notebook 06 |
+| Resposta fundamentada no conteúdo recuperado | Feito: implementada | Seção 9 · notebook 07 |
+| Evidência das fontes utilizadas | Feito: tabela de fontes por resposta | Seções 9 e 10 · notebook 07 |
+| Diagrama de arquitetura | Feito | Seção 2 |
+| Pipeline de ingestão de dados | Feito | Seção 4 |
 
 **Números principais**
 
@@ -70,7 +70,7 @@ sentence-transformers). Assim nenhum texto do usuário sai do computador.
 
 ```mermaid
 flowchart TB
-    subgraph ING["① Ingestão — offline, uma vez por versão da base"]
+    subgraph ING["1. Ingestão — offline, uma vez por versão da base"]
         direction LR
         F["LawCodex/br<br/>25 normas"] --> AU["Auditoria<br/>hashes e leitura"]
         AU --> ES["Estruturação<br/>artigo › parágrafo<br/>› inciso › alínea"]
@@ -80,7 +80,7 @@ flowchart TB
 
     EM --> DB[("PostgreSQL + pgvector<br/>versões A e D")]
 
-    subgraph CON["② Consulta — online, a cada pergunta"]
+    subgraph CON["2. Consulta — online, a cada pergunta"]
         direction TB
         Q["Pergunta"] --> HY["HyDE<br/>qwen3:4b escreve<br/>um texto hipotético"]
         Q --> B1["Busca vetorial em D<br/>com a pergunta · top 50"]
